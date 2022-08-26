@@ -55,4 +55,72 @@ $ sudo apt-get install gnuradio gr-somosdr
 
 Este software es compatible tanto para el sistema operativo de Linux y Windows, este se puede descargar mediante el siguiente enlace [Descargar Matlab](https://login.mathworks.com/embedded-login/landing.html?cid=getmatlab&s_tid=gn_getml).
 
+## 3. Puesta a punto y uso de GNSS-SDR
+
+Una vez instalado GNSS-SDR es necesario el uso de archivos de configuraciòn para correr GNSS-SDR. Los archivos de configuracion y la documentacion se pueden encontrar en la pagina oficial de [GNSS-SDR](https://gnss-sdr.org/docs/overview/). En este repositorio se pueden encontrar archivos de configuracion de GNSS-SDR para los dispositivos RTL-SDR, HackRF One y Ettus USRP B210.
+
+En una terminal se procede a insertar el siguiente comando ```$ gnss-sdr --config_file=./nombreArchivo.conf```. Cabe acalarar que la terminal debe estar direccionada a la carpeta donde se encuentre el archivo de configuracion. 
+
+Cuando se ejecute el comando debe verse algo parecido a esto: 
+```
+$ gnss-sdr --config_file=./nombreArchivo.conf
+Initializing GNSS-SDR v0.0.17 ... Please wait.
+Logging will be done at "/tmp"
+Use gnss-sdr --log_dir=/path/to/log to change that.
+-- X300 initialization sequence...
+-- Determining maximum frame size... 8000 bytes.
+-- Setup basic communication...
+-- Loading values from EEPROM...
+-- Setup RF frontend clocking...
+-- Radio 1x clock:200
+-- Initialize Radio0 control...
+-- Performing register loopback test... pass
+-- Initialize Radio1 control...
+-- Performing register loopback test... pass
+Sampling Rate for the USRP device: 4000000.000000 [sps]...
+UHD RF CHANNEL #0 SETTINGS
+Actual USRP center freq.: 1575420000.010133 [Hz]...
+PLL Frequency tune error 0.010133 [Hz]...
+Actual daughterboard gain set to: 37.500000 dB...
+Setting RF bandpass filter bandwidth to: 2000000.000000 [Hz]...
+Check for front-end LO: locked ... is Locked
+Using Volk machine: avx2_64_mmx
+Starting a TCP Server on port 2101
+The TCP Server is up and running. Accepting connections ...
+Current input signal time = 49 [s]
+Current input signal time = 50 [s]
+Current input signal time = 51 [s]
+Current input signal time = 52 [s]
+NAV Message: received subframe 1 from satellite GPS PRN 27 (Block IIF)
+NAV Message: received subframe 1 from satellite GPS PRN 10 (Block IIF)
+NAV Message: received subframe 1 from satellite GPS PRN 08 (Block IIF)
+NAV Message: received subframe 1 from satellite GPS PRN 16 (Block IIR)
+NAV Message: received subframe 1 from satellite GPS PRN 18 (Block IIR)
+```
+
+Con algo mas de un minuto de ejecucion seria suficiente para que GNSS-SDR arroje resultados de navegacion.
+
+```
+Position at 2016-Aug-11 14:23:19 UTC is Lat = 41.2751 [deg], Long = 1.98765 [deg], Height= 68.9893 [m]
+Position at 2016-Aug-11 14:23:19 UTC is Lat = 41.2751 [deg], Long = 1.98765 [deg], Height= 72.1068 [m]
+Current input signal time = 66 [s]
+Position at 2016-Aug-11 14:23:20 UTC is Lat = 41.2751 [deg], Long = 1.9877 [deg], Height= 67.0216 [m]
+Position at 2016-Aug-11 14:23:20 UTC is Lat = 41.2751 [deg], Long = 1.9877 [deg], Height= 84.7445 [m]
+Current input signal time = 67 [s]
+Position at 2016-Aug-11 14:23:21 UTC is Lat = 41.2751 [deg], Long = 1.98771 [deg], Height= 70.0031 [m]
+Position at 2016-Aug-11 14:23:21 UTC is Lat = 41.2751 [deg], Long = 1.98767 [deg], Height= 63.1242 [m]
+Current input signal time = 68 [s]
+```
+Y ya esta, tenemos posicionamiento en tiempo real.
+
+Los archivos de configuracion proporcionados en este repositorio estan parametrizados para funcionar y detectar solamente señales GPS en banda L1 (1575.42Mhz). Ademas, los archivos de configuracion tambien tienen habilita la opcion de grabado de la señal, es decir que se genera un archivo con extencion **.dat**,lo cual es util para el proximo paso en MATLAB.
+
+## 4. Procesamiento de la señal en MATLAB.
+
+
+
+
+
+
+
  
