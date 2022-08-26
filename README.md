@@ -117,6 +117,21 @@ Los archivos de configuracion proporcionados en este repositorio estan parametri
 
 ## 4. Procesamiento de la señal en MATLAB.
 
+Descargamos el codigo fuente de SoftGNSS desde este repositorio. Si no tenias MATLAB previamente instalado es necesario la instalacion de **pwelch**, es posible encontrarla en la seccion de instalacion de plugins de MATLAB.
+
+Despues de la ejecucion de GNSS-SDR veremos en la carpeta donde esta el archivo de configuracion un fichero con extencion **.dat**, copiamos la ruta del fichero y la pegamos en el archivo ## Pendiente tal y como se muestra en la siguiente imagen.
+
+Ejecutamos el archivo **init.m**, veremos algo parecido a:
+## Imagenes de ejecucion
+
+Si se tienen grabaciones de señales GPS de otras fuentes distintas a GNSS-SDR y se quieren procesar en MATLAB, es posible que necesitemos hacer un leve cambio de parametros en el archivo ## Pendiente, 
+## Imagen aqui
+las modificaciones mas comunes son:
+
+El proposito de usar MATLAB para procesar señales GPS tiene como fin facilitar la implementacion de metodos de estimacion espectral no convencionales, ya que vienen incluidos como funciones de MATLAB.
+
+## 5. Barrido de frecuencia en GNU Radio.
+
 
 
 
