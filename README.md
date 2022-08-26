@@ -6,7 +6,7 @@ Se implementó un receptor de señales GPS en MATLAB para el estudio comparativo
 
 # Archivos del repositorio:
 
-* ## Codigo:
+* ## Archivos de configuracion GNSS-SDR:
 
   En este apartado se presenta el código utilizado en el HardWare (HackRF y RTL-SDR) para obtener las coordenadas GPS en la terminal del sistema operativo Linux. Para hacer uso de estos comandos se es necesario tener el archivo de texto previamente descargado, abrir la terminal desde la ubicación en la que se guardo, e ingresar el siguiente comando: ``` gnss-sdr --config_file=./nombre_del_archivo.conf ```. 
   
@@ -18,6 +18,9 @@ Esta documentación se divide de la siguiente forma:
 
 1. [Hardware](#Hardwareutilizado)
 2. [Instalacion de software](#Instalacion)
+3. [Puesta a punto y uso de GNSS-SDR](#GNSS_SDR)
+4. [Procesamiento de la señal en MATLAB](#Matlab)
+5. [Barrido de frecuencia en GNU Radio](#GNU_Radio)
 
 ## 1. Hardware <a name="Hardwareutilizado"></a>
 
@@ -55,7 +58,7 @@ $ sudo apt-get install gnuradio gr-somosdr
 
 Este software es compatible tanto para el sistema operativo de Linux y Windows, este se puede descargar mediante el siguiente enlace [Descargar Matlab](https://login.mathworks.com/embedded-login/landing.html?cid=getmatlab&s_tid=gn_getml).
 
-## 3. Puesta a punto y uso de GNSS-SDR
+## 3. Puesta a punto y uso de GNSS-SDR <a name="GNSS_SDR"></a>
 
 Una vez instalado GNSS-SDR es necesario el uso de archivos de configuraciòn para correr GNSS-SDR. Los archivos de configuracion y la documentacion se pueden encontrar en la pagina oficial de [GNSS-SDR](https://gnss-sdr.org/docs/overview/). En este repositorio se pueden encontrar archivos de configuracion de GNSS-SDR para los dispositivos RTL-SDR, HackRF One y Ettus USRP B210.
 
@@ -115,7 +118,7 @@ Y ya esta, tenemos posicionamiento en tiempo real.
 
 Los archivos de configuracion proporcionados en este repositorio estan parametrizados para funcionar y detectar solamente señales GPS en banda L1 (1575.42Mhz). Ademas, los archivos de configuracion tambien tienen habilita la opcion de grabado de la señal, es decir que se genera un archivo con extencion **.dat**,lo cual es util para el proximo paso en MATLAB.
 
-## 4. Procesamiento de la señal en MATLAB.
+## 4. Procesamiento de la señal en MATLAB. <a name="Matlab"></a>
 
 Descargamos el codigo fuente de SoftGNSS desde este repositorio. Si no tenias MATLAB previamente instalado es necesario la instalacion de **pwelch**, es posible encontrarla en la seccion de instalacion de plugins de MATLAB.
 
@@ -130,9 +133,17 @@ las modificaciones mas comunes son:
 
 El proposito de usar MATLAB para procesar señales GPS tiene como fin facilitar la implementacion de metodos de estimacion espectral no convencionales, ya que vienen incluidos como funciones de MATLAB.
 
-## 5. Barrido de frecuencia en GNU Radio.
+## 5. Barrido de frecuencia en GNU Radio. <a name="GNU_Radio"></a>
 
+Se debe descargar todos los archivos de la siguiente carpeta: [Barrido GNU](https://github.com/JhonKyG/SemilleroIoT_Spectral_Estimation/tree/production/Archivos%20de%20configuracion%20GNSS-SDR/Sweeper%20RF). En esta carpeta se encuentran:
 
+* **__pycache__**: Carpeta de archivos generado por GNU Radio tras su ejecución
+
+* **GrabadoSweeper.grc**: Archivo de GNU Radio que contiene todos los bloques necesarios para llevar a cabo la ejecución del barrido junto con las conexiones que tiene cada bloque, es decir, toda la parte que el usuario puede ver y modificar.
+
+* **PruebasSweeper.py**: En esta carpeta se encuentra el ejecutable del archivo .grc, este archivo de python se encarga de procesar las configuraciones puestas en pantalla por el usuario y de igual forma llama e importa otras carpetas necesarias para llevar a cabo su respectivo funcionamiento.
+
+* **epy_module_0.py**: Este archivo contiene las funciones necesarias para modificar la frecuencia en el lenguaje de Python.
 
 
 
