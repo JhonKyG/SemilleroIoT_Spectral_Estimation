@@ -120,18 +120,57 @@ Los archivos de configuracion proporcionados en este repositorio estan parametri
 
 ## 4. Procesamiento de la señal en MATLAB. <a name="Matlab"></a>
 
-Descargamos el codigo fuente de SoftGNSS desde este repositorio. Si no tenias MATLAB previamente instalado es necesario la instalacion de **pwelch**, es posible encontrarla en la seccion de instalacion de plugins de MATLAB.
+Descargamos el codigo fuente de SoftGNSS desde este repositorio. Si no se tenia MATLAB previamente instalado es necesario la instalacion de **pwelch**, es posible encontrarla en la seccion de instalacion de plugins de MATLAB.
 
-Despues de la ejecucion de GNSS-SDR veremos en la carpeta donde esta el archivo de configuracion un fichero con extencion **.dat**, copiamos la ruta del fichero y la pegamos en el archivo ## Pendiente tal y como se muestra en la siguiente imagen.
+Despues de la ejecucion de GNSS-SDR veremos en la carpeta donde esta el archivo de configuracion un fichero con extencion **.dat**, copiamos la ruta del fichero y la pegamos la linea 61 dentro del archivo **initSettings.m** tal y como se muestra en la siguiente imagen.
+
+![image](https://user-images.githubusercontent.com/70227677/187011341-631c4fcb-d84d-4ab8-840a-467d58c17468.png)
 
 Ejecutamos el archivo **init.m**, veremos algo parecido a:
-## Imagenes de ejecucion
 
-Si se tienen grabaciones de señales GPS de otras fuentes distintas a GNSS-SDR y se quieren procesar en MATLAB, es posible que necesitemos hacer un leve cambio de parametros en el archivo ## Pendiente, 
-## Imagen aqui
-las modificaciones mas comunes son:
+![image](https://user-images.githubusercontent.com/70227677/187011841-12557941-5b8d-4123-bbde-58969520b369.png)
 
+Se ingresa "1" y enter. Aparecera lo siguiente:
+
+![image](https://user-images.githubusercontent.com/70227677/187011879-4cb97286-6639-4cb3-acec-b85881198906.png)
+
+La tabla de la imagen indica los satelites adquiridos.
+
+Ahora muestra las caracteristicas de la señal recibida.
+
+![image](https://user-images.githubusercontent.com/70227677/187011921-01e94ea9-7803-4e87-9e8d-8e3a4ac8ebd8.png)
+
+Histograma con las metricas de adquisicion para cada satelite.
+
+![image](https://user-images.githubusercontent.com/70227677/187011940-3e28153a-4e83-4c0c-8163-c08e1e799e56.png)
+
+Se indica el avance sobre el procesamiento de la señal.
+
+![image](https://user-images.githubusercontent.com/70227677/187011962-9e4de08c-166e-4856-8ed4-47e2c536842c.png)
+
+Si se tienen grabaciones de señales GPS de otras fuentes distintas a GNSS-SDR y se quieren procesar en MATLAB, es posible que necesitemos hacer un leve cambio de parametros en el archivo **initSettings.m**, 
+
+![image](https://user-images.githubusercontent.com/70227677/187012016-98068d2a-3442-48ff-95f7-c5bbb34a129e.png)
+
+En caso de no funcionar se deberian cambiar los siguientes parametros:
+```
+settings.dataType           = 'float';       % uchar, schar = 1 byte
+settings.fileType           = 2;             % 2 = IQ, 1 = Real
+settings.dataSize           = 4;             % bytes
+settings.IF                 = 0.0;           % [Hz]
+settings.samplingFreq       = 2e6;%2048000;       % [Hz]
+settings.msToProcess        = 222000;        % [ms]
+settings.numberOfChannels   = 7;
+```
 El proposito de usar MATLAB para procesar señales GPS tiene como fin facilitar la implementacion de metodos de estimacion espectral no convencionales, ya que vienen incluidos como funciones de MATLAB.
+
+Finalmente se tienen los resultados de la navegacion.
+
+![image](https://user-images.githubusercontent.com/70227677/187012136-a4f23a21-a787-4202-a65f-18a507750ee5.png)
+
+Coordenadas del lugar donde se realizo la grabacion.
+
+![image](https://user-images.githubusercontent.com/70227677/187012159-5edb5fe7-3ac1-471e-a7bd-eb81a1d23c0b.png)
 
 ## 5. Barrido de frecuencia en GNU Radio. <a name="GNU_Radio"></a>
 
