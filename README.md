@@ -12,7 +12,7 @@ Se implementó un receptor de señales GPS en MATLAB para el estudio comparativo
   
   El tiempo de ejecución para obtener las coordenadas de la ubicación actual dependerá en gran medida del sitio en el que se encuentre puesto que al estar en un lugar cerrado el ruido de los objetos e inclusive la cantidad de nubes que se presenta en el cielo atenuara la señal GPS hasta el punto de llegar a tener un tiempo completamente indefinido.
 
-# Requerimiento:
+# Contenido:
 
 Esta documentación se divide de la siguiente forma:
 
@@ -24,17 +24,11 @@ Esta documentación se divide de la siguiente forma:
 
 ## 1. Hardware <a name="Hardwareutilizado"></a>
 
-* Antena GPS:
+* Antena GPS: <br><br> Las antenas GPS permiten la aplicación de sistemas de navegación por satélite (GNSS) permitiendo un rastreo y localizacion de la ubicacion de cualquier objeto que se encuentre en el rango de los satélites. Estas antenas captan las señales de banda L transmitidas del espacio y las transfieren a una unidad de procesamiento para determinar la ubicación de los respectivos receptores.
 
-Las antenas GPS permiten la aplicación de sistemas de navegación por satélite (GNSS) permitiendo un rastreo y localizacion de la ubicacion de cualquier objeto que se encuentre en el rango de los satélites. Estas antenas captan las señales de banda L transmitidas del espacio y las transfieren a una unidad de procesamiento para determinar la ubicación de los respectivos receptores.
+* HackRF One: <br><br> Dispositivo auxiliar e independiente utilizado por SDR para transmitir o recibir señales de radio desde 1 MHZ hasta 6 GHZ. Diseñado para facilitar el desarrollo de las tecnologías de la comunicación tanto actuales como en el desarrollo de las nuevas generaciones de tecnologías de radio junto con sus correspondientes protocolos de comunicación.
 
-* HackRF One:
-
-Dispositivo auxiliar e independiente utilizado por SDR para transmitir o recibir señales de radio desde 1 MHZ hasta 6 GHZ. Diseñado para facilitar el desarrollo de las tecnologías de la comunicación tanto actuales como en el desarrollo de las nuevas generaciones de tecnologías de radio junto con sus correspondientes protocolos de comunicación.
-
-* Nooelec Tiny TCX0: 
-
-Complemento de 10 MHz para HackRF, este mide 0,58” x 0,4”. Tiene la capacidad establecer un ruido de fase ultra bajo y una estabilidad de frecuencia en casi cualquier condicion. Este es un excelente complemento para realizar experimentaciones con alta precision con el HackRF en cuanto a proyectos relaciones con el GPS
+* Nooelec Tiny TCX0: <br><br> Complemento de 10 MHz para HackRF, este mide 0,58” x 0,4”. Tiene la capacidad establecer un ruido de fase ultra bajo y una estabilidad de frecuencia en casi cualquier condicion. Este es un excelente complemento para realizar experimentaciones con alta precision con el HackRF en cuanto a proyectos relaciones con el GPS
 
 ## 2. Instalación de software <a name="Instalacion"></a>
 
@@ -174,9 +168,11 @@ Coordenadas del lugar donde se realizo la grabacion.
 
 ## 5. Barrido de frecuencia en GNU Radio. <a name="GNU_Radio"></a>
 
-Se debe descargar todos los archivos de la siguiente carpeta: [Barrido GNU](https://github.com/JhonKyG/SemilleroIoT_Spectral_Estimation/tree/production/Archivos%20de%20configuracion%20GNSS-SDR/Sweeper%20RF). En esta carpeta se encuentran:
+Tras descargar el software de GNU Radio se procede a descargar los siguientes archivos [Barrido GNU](https://github.com/JhonKyG/SemilleroIoT_Spectral_Estimation/tree/production/Archivos%20de%20configuracion%20GNSS-SDR/Sweeper%20RF) con los siguientes comandos:
 
-* **__pycache__**: Carpeta de archivos generado por GNU Radio tras su ejecución
+En esta carpeta se encuentran los siguientes archivos:
+
+* **__pycache__**: Carpeta de archivos generado por GNU Radio tras su ejecución.
 
 * **GrabadoSweeper.grc**: Archivo de GNU Radio que contiene todos los bloques necesarios para llevar a cabo la ejecución del barrido junto con las conexiones que tiene cada bloque, es decir, toda la parte que el usuario puede ver y modificar.
 
@@ -184,8 +180,22 @@ Se debe descargar todos los archivos de la siguiente carpeta: [Barrido GNU](http
 
 * **epy_module_0.py**: Este archivo contiene las funciones necesarias para modificar la frecuencia en el lenguaje de Python.
 
+El Barrido RF se puede abrir el archivo *GrabadoSweeper.grc* o bien se puede abrir el software de GNU Radio, se debe visualizar la siguiente interfaz:
 
+[![Diagrama-De-Bloques-GNURadio.png](https://i.postimg.cc/j5x1sYtP/Diagrama-De-Bloques-GNURadio.png)](https://postimg.cc/kVHscZVg)
 
+Para inicializar la ejecución se presiona click al icono de 'Play'.
 
+[![Icono-Ejecucion.png](https://i.postimg.cc/44tfN3X1/Icono-Ejecucion.png)](https://postimg.cc/SjSFgk2X)
 
- 
+Se visualiza la siguiente ventana con la cual se pueden apreciar las gráficas de tiempo y casscada, además de la configuración de algunos parámetros del audio y de la recepción del HackRF One. Para una mejor visualización del espectro se escogio una frecuencia de radio FM (88-108 MHz).
+
+[![Pantalla-Ejecucion-GNURadio.png](https://i.postimg.cc/7hW7PY37/Pantalla-Ejecucion-GNURadio.png)](https://postimg.cc/dZGD4FSt)
+
+El contenido de esta interfaz es la siguiente:
+
+* Diagrama de cascada con y sin filtro de banda: <br><br> [![Watter-Fall.png](https://i.postimg.cc/d3kXkRX9/Watter-Fall.png)](https://postimg.cc/sGzKbW3B)
+
+* Sumidero gráfico para mostrar multiples señales: <br><br> [![FreqSink.png](https://i.postimg.cc/K8by3V5p/FreqSink.png)](https://postimg.cc/ykLGwLt0) [![Freq-Band-Pass-Filter.png](https://i.postimg.cc/JnswWW10/Freq-Band-Pass-Filter.png)](https://postimg.cc/Q9ZYpwKZ)
+
+* Multiples señales de frecuencia en el tiempo: <br><br> [![TimeSink.png](https://i.postimg.cc/cCQ0VNmY/TimeSink.png)](https://postimg.cc/fSTG9p1T)
