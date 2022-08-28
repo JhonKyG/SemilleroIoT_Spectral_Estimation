@@ -20,7 +20,8 @@ Esta documentación se divide de la siguiente forma:
 2. [Instalacion de software](#Instalacion)
 3. [Puesta a punto y uso de GNSS-SDR](#GNSS_SDR)
 4. [Procesamiento de la señal en MATLAB](#Matlab)
-5. [Barrido de frecuencia en GNU Radio](#GNU_Radio)
+5. [Barrido de frecuencia en GNU Radio](#GNU_Radio)<br>
+5.1. [Problemas con GNU Radio](#Problemas_GURadio)
 
 ## 1. Hardware <a name="Hardwareutilizado"></a>
 
@@ -34,13 +35,13 @@ Esta documentación se divide de la siguiente forma:
 
 ### Instalación del GNSS-SDR  y  GNU Radio 
 
-Tanto el software del GNSS-SDR como el de GNU Radio se pueden instalar con el siguiente comando a partir del Sistema Operativo (SO) de Debian 9 o Ubuntu 16.04 Linux
+Tanto el software del GNSS-SDR como el de GNU Radio se pueden instalar con el siguiente comando a partir del Sistema Operativo (SO) de Debian 9 o Ubuntu 16.04 Linux. Pueden haber inconvenientes al tratar instalar otras versiones del GNU Radio al ya existir una versión
 
 ``` 
 $ sudo apt-get install gnss-sdr 
 ```
 
-EL bloque Osmocom y bloque RTL-SDR no estan instalados por defecto en el GNU Radio, el proceso para instalarlos es el siguiente en la terminal de Linux
+Puede que el bloques Osmocom y el bloque RTL-SDR no esten instalados por defecto en el GNU Radio, el proceso para instalarlos es el siguiente:
 
 ``` 
 $ sudo apt-get install libportaudio2
@@ -168,9 +169,7 @@ Coordenadas del lugar donde se realizo la grabacion.
 
 ## 5. Barrido de frecuencia en GNU Radio. <a name="GNU_Radio"></a>
 
-Tras descargar el software de GNU Radio se procede a descargar los siguientes archivos [Barrido GNU](https://github.com/JhonKyG/SemilleroIoT_Spectral_Estimation/tree/production/Archivos%20de%20configuracion%20GNSS-SDR/Sweeper%20RF) con los siguientes comandos:
-
-En esta carpeta se encuentran los siguientes archivos:
+Tras descargar el software de GNU Radio se procede a descargar los siguientes archivos [Barrido GNU](https://github.com/JhonKyG/SemilleroIoT_Spectral_Estimation/tree/production/Archivos%20de%20configuracion%20GNSS-SDR/Sweeper%20RF). En esta carpeta se encuentran los siguientes archivos:
 
 * **__pycache__**: Carpeta de archivos generado por GNU Radio tras su ejecución.
 
@@ -180,11 +179,11 @@ En esta carpeta se encuentran los siguientes archivos:
 
 * **epy_module_0.py**: Este archivo contiene las funciones necesarias para modificar la frecuencia en el lenguaje de Python.
 
-El Barrido RF se puede abrir el archivo *GrabadoSweeper.grc* o bien se puede abrir el software de GNU Radio, se debe visualizar la siguiente interfaz:
+El Barrido RF se puede abrir haciendo click en el archivo *GrabadoSweeper.grc* o bien se puede abrir el software de GNU Radio y abrirlo directamente desde la aplicación, se debe visualizar la siguiente interfaz:
 
 [![Diagrama-De-Bloques-GNURadio.png](https://i.postimg.cc/j5x1sYtP/Diagrama-De-Bloques-GNURadio.png)](https://postimg.cc/kVHscZVg)
 
-Para inicializar la ejecución se presiona click al icono de 'Play'.
+Para realizar este experimento es necesario que el HackRF One este conectado al computador (el GNU Radio puede admitir otros dispositivos SDR. No obstante, el tipo de bloque puede variar segun sea el caso). Para inicializar la ejecución se presiona click al icono de 'Play'.
 
 [![Icono-Ejecucion.png](https://i.postimg.cc/44tfN3X1/Icono-Ejecucion.png)](https://postimg.cc/SjSFgk2X)
 
@@ -199,3 +198,18 @@ El contenido de esta interfaz es la siguiente:
 * Sumidero gráfico para mostrar multiples señales: <br><br> [![FreqSink.png](https://i.postimg.cc/K8by3V5p/FreqSink.png)](https://postimg.cc/ykLGwLt0) [![Freq-Band-Pass-Filter.png](https://i.postimg.cc/JnswWW10/Freq-Band-Pass-Filter.png)](https://postimg.cc/Q9ZYpwKZ)
 
 * Multiples señales de frecuencia en el tiempo: <br><br> [![TimeSink.png](https://i.postimg.cc/cCQ0VNmY/TimeSink.png)](https://postimg.cc/fSTG9p1T)
+
+### 5.1. Problemas con GNU Radio. <a name="Problemas_GURadio"></a>
+
+- Como ya se había mencionado, uno de los inconvenientes al trabajar con GNU Radio tras ingresar el comando ```$ sudo apt-get install gnss-sdr``` es que al tratar de instalar otras versiones más actualizadas el Sistema Operativo presenta una cierta oposición al ya existir una versión necesaria para ejecutar el GNSS SDR.
+
+- Algunas versiones que presenta GNU Radio carecen de la identificación (ID) en algunos bloques como lo es en el caso de **Probe Signal** <br><br>[![Probe-Signal-Sin-Id.png](https://i.postimg.cc/mr0mDmKZ/Probe-Signal-Sin-Id.png)](https://postimg.cc/FfVyCV9w) 
+<br><br>
+Para habilitar el identificador (Id) de un bloque se deben seguir los siguientes pasos, es importante tener esto en cuenta puesto que el archivo de configuración no es editable. 
+<br> 1. Ingresar en la carpeta de bloques usr/local/share/gnuradio/grc/blocks, esta carpeta se encuentra en la segunda dirección de la terminal del GNU Radio: <br><br>[![Direccion-De-Los-Bloques-Terminal.png](https://i.postimg.cc/VNfcLkQL/Direccion-De-Los-Bloques-Terminal.png)](https://postimg.cc/LJbWxR8r) 
+<br> 2. Abrir una terminal e ingresar como súper usuario el siguiente código: ```$ nano blocks\_probe\_signal\_x.block.yml```
+<br> 3. Al ingresar el anterior comando se puede visualizar el siguiente script: <br><br> [![Script-Signal-Probe.png](https://i.postimg.cc/d0sLPF5G/Script-Signal-Probe.png)](https://postimg.cc/NKngm3q0)
+<br> 4. Escribir 'show_id' dentro de la lista de flags como se ve en la figura: <br> [![ShowId.png](https://i.postimg.cc/P59tX8zb/ShowId.png)](https://postimg.cc/3kjM9NqW)
+<br> 5. Al terminar de realizar los anteriores pasos se puede apreciar el Id se encuentra habilitado en el bloque **Probe Signal** <br> [![Probe-Signal-Con-Id.png](https://i.postimg.cc/sgQrNgdM/Probe-Signal-Con-Id.png)](https://postimg.cc/qNTSt07r)
+
+
