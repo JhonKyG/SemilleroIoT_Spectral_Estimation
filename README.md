@@ -12,13 +12,13 @@ Se implementó un receptor de señales GPS en MATLAB para el estudio comparativo
   
   El tiempo de ejecución para obtener las coordenadas de la ubicación actual dependerá en gran medida del sitio en el que se encuentre puesto que al estar en un lugar cerrado el ruido de los objetos e inclusive la cantidad de nubes que se presenta en el cielo atenuara la señal GPS hasta el punto de llegar a tener un tiempo completamente indefinido.
   
-* ## Documentacion:
+* ## Documentación:
  
- Directorio en el que se encuentra toda la documentacion necesaria, tanto teorica como práctica para realizar el presente proyecto. Se encuentra el documento final, el tutorial y los archivos de especificación de requerimientos para el barrido RF y el de la estimación espectral en formato pdf.
+	Directorio en el que se encuentra toda la documentacion necesaria, tanto teorica como práctica para realizar el presente proyecto. Se encuentra el documento final, el tutorial y los archivos de especificación de requerimientos para el barrido RF y el de la estimación espectral en formato pdf.
 
 * ## GNSS_SDR:
 
- Archivos y carpetas de Matlab que componen el programa SoftGNSS V3.0 para la implementación de métodos no convencionales. El tiempo de ejecución puede llevar varios minutos.
+	Archivos y carpetas de Matlab que componen el programa SoftGNSS V3.0 para la implementación de métodos no convencionales. El tiempo de ejecución puede llevar varios minutos.
 
 # Contenido:
 
