@@ -207,7 +207,7 @@ Algunas versiones que presenta GNU Radio carecen de la identificación (ID) en a
 
 Para habilitar el identificador (Id) de un bloque se deben seguir los siguientes pasos, es importante tener esto en cuenta puesto que el archivo de configuración no es editable.
 
-<br> 1. Ingresar en la carpeta de bloques usr/local/share/gnuradio/grc/blocks, esta carpeta se encuentra en la segunda dirección de la terminal del GNU Radio: <br>
+<br> 1. Ingresar en la carpeta de bloques /usr/share/gnuradio/grc/blocks, esta carpeta se encuentra en la segunda dirección de la terminal del GNU Radio: <br>
 
 ```
 <<< Welcome to GNU Radio Companion 3.8.1.0 >>>
