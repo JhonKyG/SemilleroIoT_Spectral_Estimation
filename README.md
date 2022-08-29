@@ -201,15 +201,69 @@ El contenido de esta interfaz es la siguiente:
 
 ### 5.1. Problemas con GNU Radio. <a name="Problemas_GURadio"></a>
 
-- Como ya se había mencionado, uno de los inconvenientes al trabajar con GNU Radio tras ingresar el comando ```$ sudo apt-get install gnss-sdr``` es que al tratar de instalar otras versiones más actualizadas el Sistema Operativo presenta una cierta oposición al ya existir una versión necesaria para ejecutar el GNSS SDR.
+Como ya se había mencionado, uno de los inconvenientes al trabajar con GNU Radio tras ingresar el comando ```$ sudo apt-get install gnss-sdr``` es que al tratar de instalar otras versiones más actualizadas el Sistema Operativo presenta una cierta oposición al ya existir una versión necesaria para ejecutar el GNSS SDR.
 
-- Algunas versiones que presenta GNU Radio carecen de la identificación (ID) en algunos bloques como lo es en el caso de **Probe Signal** <br><br>[![Probe-Signal-Sin-Id.png](https://i.postimg.cc/mr0mDmKZ/Probe-Signal-Sin-Id.png)](https://postimg.cc/FfVyCV9w) 
-<br><br>
-Para habilitar el identificador (Id) de un bloque se deben seguir los siguientes pasos, es importante tener esto en cuenta puesto que el archivo de configuración no es editable. 
-<br> 1. Ingresar en la carpeta de bloques usr/local/share/gnuradio/grc/blocks, esta carpeta se encuentra en la segunda dirección de la terminal del GNU Radio: <br><br>[![Direccion-De-Los-Bloques-Terminal.png](https://i.postimg.cc/VNfcLkQL/Direccion-De-Los-Bloques-Terminal.png)](https://postimg.cc/LJbWxR8r) 
-<br> 2. Abrir una terminal e ingresar como súper usuario el siguiente código: ```$ nano blocks\_probe\_signal\_x.block.yml```
-<br> 3. Al ingresar el anterior comando se puede visualizar el siguiente script: <br><br> [![Script-Signal-Probe.png](https://i.postimg.cc/d0sLPF5G/Script-Signal-Probe.png)](https://postimg.cc/NKngm3q0)
-<br> 4. Escribir 'show_id' dentro de la lista de flags como se ve en la figura: <br> [![ShowId.png](https://i.postimg.cc/P59tX8zb/ShowId.png)](https://postimg.cc/3kjM9NqW)
-<br> 5. Al terminar de realizar los anteriores pasos se puede apreciar el Id se encuentra habilitado en el bloque **Probe Signal** <br> [![Probe-Signal-Con-Id.png](https://i.postimg.cc/sgQrNgdM/Probe-Signal-Con-Id.png)](https://postimg.cc/qNTSt07r)
+Algunas versiones que presenta GNU Radio carecen de la identificación (ID) en algunos bloques como lo es en el caso de **Probe Signal** <br><br>[![Probe-Signal-Sin-Id.png](https://i.postimg.cc/mr0mDmKZ/Probe-Signal-Sin-Id.png)](https://postimg.cc/FfVyCV9w)
+
+Para habilitar el identificador (Id) de un bloque se deben seguir los siguientes pasos, es importante tener esto en cuenta puesto que el archivo de configuración no es editable.
+
+<br> 1. Ingresar en la carpeta de bloques usr/local/share/gnuradio/grc/blocks, esta carpeta se encuentra en la segunda dirección de la terminal del GNU Radio: <br>
+
+```
+<<< Welcome to GNU Radio Companion 3.8.1.0 >>>
+
+Block paths:
+	/usr/share/gnuradio/grc/blocks
+	/usr/local/share/gnuradio/grc/blocks
+```
+
+<br> 2. Abrir una terminal e ingresar como súper usuario el siguiente código: 
+```
+$ nano blocks\_probe\_signal\_x.block.yml
+```
+
+<br> 3. Al ingresar el anterior comando se puede visualizar el siguiente script: 
+
+``` 
+id: blocks_probe_signal_x
+label: Probe Signal
+flags: [ python, cpp ]
+
+parameters:
+-   id: type
+    label: Input Type
+    dtype: enum
+    options: [complex, float, int, short, byte]
+    option_attributes:
+        fcn: [c, f, i, s, b]
+    hide: part
+
+inputs:
+-   domain: stream
+    dtype: ${ type }
+
+templates:
+    imports: from gnuradio import blocks
+    make: blocks.probe_signal_${type.fcn}()
+
+cpp_templates:
+    includes: ['#include <gnuradio/blocks/probe_signal.h>']
+    declarations: 'blocks::probe_signal_${type.fcn}::sptr ${id};'
+    make: 'this->${id} = blocks::probe_signal_${type.fcn}::make();'
+
+documentation: |-
+    Available functions to probe: level()
+
+    Use with the function probe block.
+
+file_format: 1
+``` 
+4. Añadir 'show_id' dentro de la lista de flags: 
+
+```
+flags: [ show_id, python, cpp ]
+```
+
+<br> 5. Al terminar de realizar los anteriores pasos se puede apreciar el Id se encuentra habilitado en el bloque **Probe Signal** <br><br> [![Probe-Signal-Con-Id.png](https://i.postimg.cc/sgQrNgdM/Probe-Signal-Con-Id.png)](https://postimg.cc/qNTSt07r)
 
 
