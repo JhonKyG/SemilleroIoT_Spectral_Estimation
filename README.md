@@ -47,6 +47,7 @@ Tanto el software del GNSS-SDR como el de GNU Radio se pueden instalar con el si
 
 ``` 
 $ sudo apt-get install gnss-sdr 
+
 ```
 
 Puede que el bloques Osmocom y el bloque RTL-SDR no esten instalados por defecto en el GNU Radio, el proceso para instalarlos es el siguiente:
@@ -55,6 +56,7 @@ Puede que el bloques Osmocom y el bloque RTL-SDR no esten instalados por defecto
 $ sudo apt-get install libportaudio2
 $ sudo apt-get install git-core
 $ sudo apt-get install gnuradio gr-somosdr
+
 ```
 
 ### Instalación de Matlab
@@ -120,6 +122,93 @@ Current input signal time = 68 [s]
 Y ya esta, tenemos posicionamiento en tiempo real.
 
 Los archivos de configuracion proporcionados en este repositorio estan parametrizados para funcionar y detectar solamente señales GPS en banda L1 (1575.42Mhz). Ademas, los archivos de configuracion tambien tienen habilita la opcion de grabado de la señal, es decir que se genera un archivo con extencion **.dat**,lo cual es util para el proximo paso en MATLAB.
+
+### 3.1 Problemas con el Ettus USRP B210.
+
+Al empezar a utilizar el bloque "UHD: USRP Source" utilizado para el Ettus USRP B210 en GNU Radio, la terminal de esta aplicación mostrará que el equipo SDR no se ha encontrado:
+
+```
+Generating: '/home/jhongarcia/Documentos/USRP B210 pruebas/PruebasUSRP.py'
+
+Executing: /usr/bin/python3 -u /home/jhongarcia/Documentos/USRP B210 pruebas/PruebasUSRP.py
+
+Warning: failed to XInitThreads()
+[INFO] [UHD] linux; GNU C++ version 9.2.1 20200304; Boost_107100; UHD_3.15.0.0-2build5
+[WARNING] [B200] EnvironmentError: IOError: Could not find path for image: usrp_b200_fw.hex
+
+Using images directory: <no images directory located>
+
+Set the environment variable 'UHD_IMAGES_DIR' appropriately or follow the below instructions to download the images package.
+
+Please run:
+
+ "/usr/lib/uhd/utils/uhd_images_downloader.py"
+Traceback (most recent call last):
+  File "/home/jhongarcia/Documentos/USRP B210 pruebas/PruebasUSRP.py", line 183, in <module>
+    main()
+  File "/home/jhongarcia/Documentos/USRP B210 pruebas/PruebasUSRP.py", line 161, in main
+    tb = top_block_cls()
+  File "/home/jhongarcia/Documentos/USRP B210 pruebas/PruebasUSRP.py", line 78, in __init__
+    self.uhd_usrp_source_0 = uhd.usrp_source(
+  File "/usr/lib/python3/dist-packages/gnuradio/uhd/__init__.py", line 125, in constructor_interceptor
+    return old_constructor(*args)
+  File "/usr/lib/python3/dist-packages/gnuradio/uhd/uhd_swig.py", line 2787, in make
+    return _uhd_swig.usrp_source_make(device_addr, stream_args, issue_stream_cmd_on_start)
+RuntimeError: LookupError: KeyError: No devices found for ----->
+Empty Device Address
+```
+
+Para encontrar el SDR, es necesario ingresar al siguiente comando:
+
+```
+$ uhd_find_devices
+```
+Presentando el siguiente resultado por la terminal:
+
+```
+[INFO] [UHD] linux; GNU C++ version 9.2.1 20200304; Boost_107100; UHD_3.15.0.0-2build5
+[WARNING] [B200] EnvironmentError: IOError: Could not find path for image: usrp_b200_fw.hex
+
+Using images directory: <no images directory located>
+
+Set the environment variable 'UHD_IMAGES_DIR' appropriately or follow the below instructions to download the images package.
+
+Please run:
+
+ "/usr/lib/uhd/utils/uhd_images_downloader.py"
+No UHD Devices Found
+```
+
+Para encontrar el equipo es necesario ir a la siguiente carpeta
+
+```
+$ cd /usr/lib/uhd/utils
+```
+Ejecutar el archivo uhd_images_downloader con el siguiente comando:
+
+```
+$ sudo ./uhd_images_downloader.py
+```
+
+Al ingresar nuevamente el comando:
+
+```
+$ uhd_find_devices
+```
+
+Se mostrará que el SDR fue encontrado
+
+```
+[INFO] [UHD] linux; GNU C++ version 9.2.1 20200304; Boost_107100; UHD_3.15.0.0-2build5
+--------------------------------------------------
+-- UHD Device 0
+--------------------------------------------------
+Device Address:
+    serial: 314BC7C
+    name: MyB210
+    product: B210
+    type: b200   
+```
 
 ## 4. Procesamiento de la señal en MATLAB. <a name="Matlab"></a>
 
